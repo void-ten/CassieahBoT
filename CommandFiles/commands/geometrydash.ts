@@ -8,7 +8,7 @@ const gdcmd = defineCommand({
     otherNames: ["dash", "geometrydash", "gdbrowser"],
     category: "Utilities",
     description: "Anything related to GDBrowser.",
-    version: "1.0.0",
+    version: "1.0.1",
     icon: "🛠️",
   },
   style: {
@@ -43,17 +43,59 @@ const gdoptions = new SpectralCMDHome({ isHypen: false }, [
           (level) =>
             `**${level.name}** (#${level.id})\n${UNISpectra.arrow} By ${
               level.author
-            } \n🕒 ${level.length} | 📥 ${abbreviateNumber(
+            }\n[${level.difficulty?.toUpperCase()}${
+              level.featured ? ` ✨ **${level.stars || 1}**` : ""
+            }]\n🕒 ${level.length} | 📥 ${abbreviateNumber(
               level.downloads || 0
-            )} ${getLikeEmo(level.likes || 0)} | ${abbreviateNumber(
+            )} | ${getLikeEmo(level.likes || 0)} ${abbreviateNumber(
               level.likes || 0
             )}\n🎵 ***${level.songName}***\n${UNISpectra.arrowFromT} ***By ${
               level.songAuthor
             }***`
         ),
       ].join(`\n${UNISpectra.standardLine}\n`);
-      await output.reply(mapped);
+      await output.reply(mapped.length === 1 ? "No Results." : mapped);
       await output.reaction("✅");
+    },
+  },
+  {
+    key: "view",
+    description: "View all info about a GD Level using a Level ID",
+    aliases: ["v"],
+    args: ["<level_ID>"],
+    async handler({ output }, { spectralArgs }) {
+      try {
+        const ID = spectralArgs[0];
+        if (!ID) {
+          return output.reply(`🔎 Please enter a level ID.`);
+        }
+        await output.reaction("⏳");
+        const level = await GDBrowserAPI.level(ID);
+        const getLikeEmo = (likes: number) =>
+          likes < 0 ? `👎 **Dislikes**:` : `👍 **Likes**:`;
+        const mapped = `**${level.name}** (#${level.id})\n${
+          UNISpectra.arrow
+        } By ${level.author}\n\n${
+          level.description || "(No Description Provided)"
+        }\n\n🕒 **Length**: ${
+          level.length
+        }\n📥 **Downloads**: (${abbreviateNumber(level.downloads || 0)}) ${
+          level.downloads || 0
+        }\n${getLikeEmo(level.likes || 0)} (${abbreviateNumber(
+          level.likes || 0
+        )}) ${level.likes || 0}\n✅ **Coins**: ${"🪙".repeat(
+          level.coins || 0
+        )}\n😸 **Difficulty**: ${level.difficulty?.toUpperCase()} ${
+          level.featured ? `✨ **${level.stars || 1}**` : ""
+        }\n${UNISpectra.standardLine}\n🎵 **Song**: ***${level.songName}*** (#${
+          level.songID
+        })\n${UNISpectra.arrowFromT} ***By ${level.songAuthor}***`;
+
+        await output.reply(mapped);
+        await output.reaction("✅");
+      } catch (error) {
+        return output.reply("No Results.");
+      }
     },
   },
 ]);
