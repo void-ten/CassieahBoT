@@ -16,6 +16,7 @@ import { inspect } from "util";
 
 export class OutputClass implements OutputProps {
   #ctx: CommandContext;
+  NO_EVENT_MODE: boolean;
 
   /**
    * @deprecated
@@ -26,7 +27,19 @@ export class OutputClass implements OutputProps {
     return this.#ctx.api;
   }
 
+  static createWithoutEvent(api: CommandContext["api"]) {
+    const output = new OutputClass({
+      api,
+    } as CommandContext);
+    return output;
+  }
+
+  canWorkWithEvent(_ctx: CommandContext): _ctx is CommandContext {
+    return !this.NO_EVENT_MODE;
+  }
+
   constructor(ctx: CommandContext) {
+    this.NO_EVENT_MODE = false;
     this.#ctx = ctx;
     this.#prepend = "";
     this.#append = "";
@@ -38,14 +51,12 @@ export class OutputClass implements OutputProps {
     const self = this;
 
     this.Styled = class OutputStyled {
-      #ctx: CommandContext;
       /**
        * Creates a new styled message instance.
        * @param style - The style to apply to the messages.
        */
       constructor(style: CassidySpectra.CommandStyle) {
         this.style = style;
-        this.#ctx = ctx;
       }
       /**
        * The style applied to the messages.
@@ -86,6 +97,7 @@ export class OutputClass implements OutputProps {
         return self.edit(body, messageID, delay);
       }
     };
+    this.#ctx.output = this;
   }
 
   UIName: string;
@@ -190,7 +202,7 @@ export class OutputClass implements OutputProps {
       if (!this.LASTID) {
         throw new Error("No last output to attach to.");
       }
-      return this.#ctx.output.addReplyListener(this.LASTID, listener);
+      return this.addReplyListener(this.LASTID, listener);
     }
     return this.dispatch(bodyOrListener, {
       callback: callbackRep,
@@ -278,7 +290,7 @@ export class OutputClass implements OutputProps {
    * @param thread - Optional thread to add the user to.
    * @returns A promise resolving when the operation is complete.
    */
-  add(user: string, thread: string = this.#ctx.event.threadID): Promise<void> {
+  add(user: string, thread: string = this.#ctx.event?.threadID): Promise<void> {
     return this.api.addUserToGroup(user, thread, (_err) => {});
   }
 
@@ -288,7 +300,10 @@ export class OutputClass implements OutputProps {
    * @param thread - Optional thread to remove the user from.
    * @returns A promise resolving when the operation is complete.
    */
-  kick(user: string, thread: string = this.#ctx.event.threadID): Promise<void> {
+  kick(
+    user: string,
+    thread: string = this.#ctx.event?.threadID
+  ): Promise<void> {
     return this.api.removeUserFromGroup(user, thread, (_err) => {});
   }
 
@@ -330,13 +345,13 @@ export class OutputClass implements OutputProps {
             repObj: PromiseStandardReplyArg<T>;
           }
         ) => any | Promise<any>),
-    mid: string = this.#ctx.event.messageID
+    mid: string = this.#ctx.event?.messageID
   ) {
     if (typeof emojiOrListener === "function") {
       if (!this.LASTID) {
         throw new Error("No last output to attach to.");
       }
-      return this.#ctx.output.addReactionListener(this.LASTID, emojiOrListener);
+      return this.addReactionListener(this.LASTID, emojiOrListener);
     }
     return this.api.setMessageReaction(
       emojiOrListener,
