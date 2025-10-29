@@ -41,7 +41,6 @@ export async function entry({
   threadsDB,
   args,
 }: CommandContext) {
-  output.setStyle(style);
   if (!input.isAdmin) {
     return output.reply("You cannot enable/disable this feature.");
   }
@@ -56,7 +55,6 @@ export async function entry({
 }
 
 export async function event({ output, input, threadsDB }: CommandContext) {
-  output.setStyle(style);
   try {
     const cache = await threadsDB.getCache(input.threadID);
     if (cache.autodl === false) {
@@ -78,16 +76,19 @@ export async function event({ output, input, threadsDB }: CommandContext) {
       }
       if (data.hd || data.sd) {
         output.react("📥");
-        await output.reply({
-          body: `**${Title}**\n⏱️ **${formatDuration(data.duration_ms)}**`,
-          attachment: await global.utils.getStreamFromURL(data.hd || data.sd),
-        });
+        await output.replyStyled(
+          {
+            body: `**${Title}**\n⏱️ **${formatDuration(data.duration_ms)}**`,
+            attachment: await global.utils.getStreamFromURL(data.hd || data.sd),
+          },
+          style
+        );
         output.reaction("✅");
       } else {
         output.reaction("❌");
       }
     }
   } catch (err) {
-    output.reply(require("util").inspect(err));
+    output.replyStyled(require("util").inspect(err), style);
   }
 }
