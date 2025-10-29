@@ -130,11 +130,31 @@ export class CanvCass {
     return new CanvCass(CanvCass.preW, CanvCass.preH);
   }
 
+  changeScale(size: number) {
+    this.#canvas.width *= size;
+    this.#canvas.height *= size;
+    this.#context.scale(size, size);
+  }
+
+  reset() {
+    this.#context.resetTransform();
+    this.#canvas.width = this.#config.width;
+    this.#canvas.height = this.#config.height;
+  }
+
   static preW = 1024;
   static preH = 768;
 
   get config() {
     return this.#config;
+  }
+
+  get realWidth() {
+    return this.#canvas.width;
+  }
+
+  get realHeight() {
+    return this.#canvas.height;
   }
 
   get width() {

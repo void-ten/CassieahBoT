@@ -944,6 +944,7 @@ export class UTShop {
       header.height +
       spacing * 2;
     const canv = new CanvCass(width, height);
+    canv.changeScale(2);
     await canv.drawBackground();
     const mainFSize = 20;
     const lineDiff = 5;
