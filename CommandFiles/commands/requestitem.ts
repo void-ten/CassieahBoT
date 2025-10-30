@@ -17,12 +17,11 @@ export const meta: CommandMeta = {
   description:
     "Request, approve, buy, sell your and the community's custom items!",
   author: "Liane Cagara",
-  version: "2.2.0",
+  version: "2.2.1",
   category: "Shopping",
   role: 0,
   waitingTime: 1,
   otherNames: ["comshop", "requestitem", "reqitem", "cshop", "csh"],
-  shopPrice: 1000000,
   requirement: "4.0.0",
   icon: "👥",
   cmdType: "cplx_g",
