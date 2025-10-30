@@ -10,7 +10,7 @@ export const meta: CommandMeta = {
   name: "skyrise",
   description: "Build and manage your floating island empire!",
   otherNames: ["srs", "sky", "skyr"],
-  version: "1.0.15",
+  version: "1.0.2",
   usage: "{prefix}{name} <command> [args]",
   category: "Idle Investment Games",
   author: "@lianecagara",
@@ -105,7 +105,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
     name: "Crystal Mine",
     flavorText: "Mines sparkling **Crystals** from the island core.",
     key: "crystalMine",
-    price: { aether: 7500, crystal: 5000, stone: 5000, money: 2500 },
+    price: { aether: 75000, crystal: 50000, stone: 50000, money: 25000 },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Crystal Mine",
@@ -128,7 +128,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
     name: "Stone Quarry",
     flavorText: "Extracts sturdy **Stone** from the island.",
     key: "stoneQuarry",
-    price: { aether: 7500, crystal: 7500, stone: 5000, money: 5000 },
+    price: { aether: 75000, crystal: 75000, stone: 50000, money: 50000 },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Stone Quarry",
@@ -138,7 +138,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
         icon: "🪨",
         type: "srbuilding",
         sellPrice: 25,
-        production: { resource: ["stone"], amount: 10, interval: 60 * 1000 },
+        production: { resource: ["stone"], amount: 100, interval: 60 * 1000 },
         level: 1,
         lastCollect: Date.now(),
         workers: 0,
@@ -151,7 +151,12 @@ export const shopItems: Array<SkyForgeShopItem> = [
     name: "Sky Forge",
     flavorText: "Crafts powerful upgrades for your empire.",
     key: "skyForge",
-    price: { aether: 12500, crystal: 12500, stone: 12500, money: 12500 },
+    price: {
+      aether: 1250000,
+      crystal: 1250000,
+      stone: 1250000,
+      money: 1250000,
+    },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Sky Forge",
@@ -161,7 +166,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
         icon: "⚒️",
         type: "srbuilding",
         sellPrice: 50,
-        production: { resource: ["all"], amount: 5, interval: 120 * 1000 },
+        production: { resource: ["all"], amount: 500, interval: 120 * 1000 },
         level: 1,
         lastCollect: Date.now(),
         workers: 0,
@@ -175,7 +180,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
     type: "srworker",
     flavorText: "Increases building efficiency.",
     key: "srworker",
-    price: { aether: 2500, crystal: 2500, stone: 2500, money: 25000 },
+    price: { aether: 250000, crystal: 250000, stone: 250000, money: 2500000 },
     onPurchase({ moneySet }) {
       moneySet.srworkers = (moneySet.srworkers || 0) + 1;
     },
@@ -185,7 +190,12 @@ export const shopItems: Array<SkyForgeShopItem> = [
     name: "Aetheric Accelerator",
     flavorText: "Supercharges **Aether** production at lightning speed.",
     key: "aethericAccelerator",
-    price: { aether: 500000, crystal: 250000, stone: 250000, money: 50000 },
+    price: {
+      aether: 50000000,
+      crystal: 25000000,
+      stone: 25000000,
+      money: 5000000,
+    },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Aetheric Accelerator",
@@ -195,7 +205,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
         icon: "⚡",
         type: "srbuilding",
         sellPrice: 200,
-        production: { resource: ["aether"], amount: 800, interval: 25 * 1000 },
+        production: { resource: ["aether"], amount: 8000, interval: 25 * 1000 },
         level: 1,
         lastCollect: Date.now(),
         workers: 0,
@@ -209,7 +219,12 @@ export const shopItems: Array<SkyForgeShopItem> = [
     flavorText:
       "A hybrid forge that crafts **Aether** and **Crystals** with enhanced efficiency.",
     key: "dualForgeDynamo",
-    price: { aether: 375000, crystal: 375000, stone: 375000, money: 37500 },
+    price: {
+      aether: 37500000,
+      crystal: 37500000,
+      stone: 37500000,
+      money: 3750000,
+    },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Dual-Forge Dynamo",
@@ -222,7 +237,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
         sellPrice: 150,
         production: {
           resource: ["aether", "crystal"],
-          amount: 10,
+          amount: 1000,
           interval: 40 * 1000,
         },
         level: 1,
@@ -238,7 +253,12 @@ export const shopItems: Array<SkyForgeShopItem> = [
     flavorText:
       "Merges the elements to produce **Aether** and **Stone** at an accelerated rate.",
     key: "elementalFusionForge",
-    price: { aether: 375000, crystal: 187500, stone: 375000, money: 37500 },
+    price: {
+      aether: 37500000,
+      crystal: 18750000,
+      stone: 37500000,
+      money: 3750000,
+    },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Elemental Fusion Forge",
@@ -251,7 +271,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
         sellPrice: 150,
         production: {
           resource: ["aether", "stone"],
-          amount: 10,
+          amount: 1000,
           interval: 40 * 1000,
         },
         level: 1,
@@ -266,7 +286,12 @@ export const shopItems: Array<SkyForgeShopItem> = [
     name: "Crystal Catalyst",
     flavorText: "Doubles the speed of **Crystal** production.",
     key: "crystalCatalyst",
-    price: { aether: 400000, crystal: 400000, stone: 200000, money: 40000 },
+    price: {
+      aether: 40000000,
+      crystal: 40000000,
+      stone: 20000000,
+      money: 4000000,
+    },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Crystal Catalyst",
@@ -277,7 +302,11 @@ export const shopItems: Array<SkyForgeShopItem> = [
         icon: "💨",
         type: "srbuilding",
         sellPrice: 160,
-        production: { resource: ["crystal"], amount: 800, interval: 25 * 1000 },
+        production: {
+          resource: ["crystal"],
+          amount: 8000,
+          interval: 25 * 1000,
+        },
         level: 1,
         lastCollect: Date.now(),
         workers: 0,
@@ -291,7 +320,12 @@ export const shopItems: Array<SkyForgeShopItem> = [
     flavorText:
       "A hybrid forge producing **Stone** and **Crystals** with volcanic efficiency.",
     key: "volcanicVault",
-    price: { aether: 350000, crystal: 350000, stone: 350000, money: 35000 },
+    price: {
+      aether: 35000000,
+      crystal: 35000000,
+      stone: 35000000,
+      money: 3500000,
+    },
     onPurchase({ moneySet, xPurchasedBy }) {
       moneySet.inventory.push({
         name: "Volcanic Vault",
@@ -304,7 +338,7 @@ export const shopItems: Array<SkyForgeShopItem> = [
         sellPrice: 140,
         production: {
           resource: ["stone", "crystal"],
-          amount: 10,
+          amount: 1000,
           interval: 40 * 1000,
         },
         level: 1,

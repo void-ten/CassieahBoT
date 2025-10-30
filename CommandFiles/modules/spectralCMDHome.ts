@@ -207,7 +207,7 @@ export class SpectralCMDHome {
       validator,
       defaultCategory = "General",
       allowDefaultOnCooldown = false,
-      showDescription = true,
+      showDescription = false,
     }: SpectraMainConfig,
     configs?: Config[]
   ) {
@@ -254,7 +254,7 @@ export class SpectralCMDHome {
   }
 
   addHelpCommand() {
-    this.configs.push({
+    this.configs.unshift({
       key: "help",
       handler: this.helpHandler.bind(this),
       description: "Shows commands",
@@ -274,9 +274,9 @@ export class SpectralCMDHome {
         UNIRedux.arrow
       } 🔎 ***All Options***\n\n` +
         extra.itemList +
-        `\n\nTry **${ctx.prefix}${ctx.commandName}${
+        `\n\nUse **${ctx.prefix}${ctx.commandName}${
           extra.self.options.isHypen ? "-" : " "
-        }help** ${UNIRedux.charm}`
+        }help** for description/aliases.`
     );
   }
 

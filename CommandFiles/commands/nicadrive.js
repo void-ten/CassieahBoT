@@ -10,7 +10,7 @@ export const meta = {
   description:
     "A personal storage system for extra items. Store, retrieve, and manage inventory beyond your main limit. Upgrade for more space!",
   author: "JenicaDev || Fixed by Liane",
-  version: "1.1.1",
+  version: "2.1.1",
   usage: "{prefix}ndrive <action> [arguments]",
   category: "Inventory",
   permissions: [0],
@@ -83,13 +83,21 @@ export async function entry({
   let { ndrive } = userData;
   const userInventory = new Inventory(userData.inventory ?? []);
 
+  let discontinued = !input.isAdmin;
   if (!ndrive) {
+    if (discontinued) {
+      return output.replyStyled(
+        `NicaDrive™ has been discontinued. We're sorry that you can no longer create a **NicaDrive™ Account**`,
+        style
+      );
+    }
     ndrive = {
       name: null,
       items: [],
       storageRequested: 100,
       premium: false,
     };
+
     const ii = await output.replyStyled(
       `Before we begin, let’s set up your **NicaDrive™ Account**.\nPlease answer a few questions to personalize your experience!\n${UNIRedux.standardLine}\n🏷️ **What name should we use for your NicaDrive™ account?**\n(Example: “Nica’s Storage” or just your name.)\n\n***Reply with your name now!***`,
       style
@@ -164,6 +172,10 @@ export async function entry({
   const nicaItems = new Inventory(ndrive.items ?? [], proLimit);
   const limit = ndrive.premium ? proLimit : ndriveLimit;
 
+  let warn = discontinued
+    ? `⚠️ **WARNING**: NicaDrive™ has been discontinued. Please retrieve your items ASAP before it gets deleted!\n\n`
+    : "";
+
   /**
    * @param {typeof nicaItems} items
    */
@@ -230,7 +242,9 @@ export async function entry({
     }
     ndriveItemList += result2.join("\n");
 
-    return `***👤 ${userData.name}*** ${userInventory.size()}/${invLimit}\n\n${
+    return `${warn}***👤 ${
+      userData.name
+    }*** ${userInventory.size()}/${invLimit}\n\n${
       userInventory.size() > 0 ? invItemList.trim() : "Empty"
     }\n\n***💾 ${ndrive.name}*** ${items.size()}/100\n\n${
       items.size() > 0
@@ -321,6 +335,12 @@ export async function entry({
       icon: "📥",
       desc: "Store Item(s)",
       async callback() {
+        if (discontinued) {
+          return output.replyStyled(
+            `NicaDrive™ has been discontinued. We have removed the ability to store items but you can still retrieve.`,
+            style
+          );
+        }
         const keysToStore = subArgs;
 
         if (keysToStore.length < 1) {
@@ -394,7 +414,7 @@ export async function entry({
         });
 
         return output.reply(
-          `${str2.trim()}\n\n💾 Your NicaDrive™ Account is now updated.`
+          `${warn}${str2.trim()}\n\n💾 Your NicaDrive™ Account is now updated.`
         );
       },
     },
@@ -416,7 +436,7 @@ export async function entry({
     const items = opts
       .map((i) => `${prefix}${commandName} ${i.name}\n[${i.icon} ${i.desc}]`)
       .join("\n");
-    const res = `📂 Welcome to NicaDrive™!\nName: **${
+    const res = `${warn}📂 Welcome to NicaDrive™!\nName: **${
       ndrive.name
     }**\nYour Storage: ${nicaItems.size()}/${limit} used (Upgrade to NicaDrive Premium™ for more!)\n\n${items}`;
 
@@ -425,7 +445,7 @@ export async function entry({
 
   if (!handler.callback) {
     return output.reply(
-      `🏗️🚧 Sorry, this feature is still a **work in progress.**`
+      `${warn}🏗️🚧 Sorry, this feature is still a **work in progress.**`
     );
   }
 

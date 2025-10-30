@@ -405,6 +405,7 @@ export type BriefcaseAPIExtraConfig = Partial<SpectraMainConfig> & {
   inventoryLimit: number;
   showCollectibles: boolean;
   meta?: CommandMeta;
+  readonly?: boolean;
 };
 
 export class BriefcaseAPI {
@@ -422,6 +423,7 @@ export class BriefcaseAPI {
     extraConfig.inventoryLimit ??= 36;
     extraConfig.inventoryIcon ??= "🎒";
     extraConfig.showCollectibles ??= true;
+    extraConfig.readonly ??= false;
     this.meta = extraConfig.meta;
     this.extraConfig = extraConfig;
     this.extraItems = extraItems ?? [];
@@ -544,7 +546,46 @@ export class BriefcaseAPI {
       {
         key: "list",
         description: "Displays all items in the user's inventory.",
-        aliases: ["-l", "liat"],
+        aliases: ["-l"],
+        args: ["<optional uid>"],
+        async handler() {
+          let userData = userDataCopy;
+          let { inventory } = getDatas(userData);
+          let otherTarget = null;
+          if (actionArgs[0]) {
+            const target = await money.getCache(actionArgs[0]);
+            if (!(await money.exists(actionArgs[0]))) {
+              return output.reply(`User not found.`);
+            }
+            ({ inventory, petsData, gearsData } = getDatas(target));
+            otherTarget = target;
+            userData = target;
+          }
+          const items = inventory.getAll();
+          const grouped = [...bcContext.groupItems(items).values()];
+
+          let itemList = grouped.map((i) => listItem(i, i.amount)).join("\n");
+
+          const finalRes =
+            (otherTarget
+              ? `✅ Checking ${otherTarget.name ?? "Unregistered"}\n\n`
+              : "") +
+            `👤 **${
+              userData.name
+            }**\n\n**${inventoryName} Items** ${inventoryIcon} (**${
+              inventory.getAll().length
+            }/${invLimit}**)\n${itemList.trim() || "No items available."}`;
+
+          let newRes = finalRes;
+
+          return output.reply(newRes);
+        },
+      },
+      {
+        key: "all",
+        description:
+          "Displays all information including categories, items, and collectibles in the user's inventory.",
+        aliases: ["-a"],
         args: ["<optional uid>"],
         async handler() {
           let userData = userDataCopy;
@@ -790,6 +831,14 @@ export class BriefcaseAPI {
         aliases: ["activate", "consume", "equip", "-u"],
         args: ["[item_id | index]"],
         async handler(_, extra) {
+          if (self.extraConfig.readonly) {
+            return output.reply(
+              `👤 **${
+                userData.name || "Unregistered"
+              }** (${inventoryName})\n\n` +
+                `❌ You cannot do this action in a read-only inventory.`
+            );
+          }
           let [key] = actionArgs;
           let mctx = ctx;
           const usagePlugins = new MultiMap(
@@ -1488,6 +1537,14 @@ export class BriefcaseAPI {
         aliases: ["give", "send", "-t"],
         args: ["<item_id | index>*<num|'all'>", "<uid/reply/mention>"],
         async handler() {
+          if (self.extraConfig.readonly) {
+            return output.reply(
+              `👤 **${
+                userData.name || "Unregistered"
+              }** (${inventoryName})\n\n` +
+                `❌ You cannot do this action in a read-only inventory.`
+            );
+          }
           let [keyTX = "", recipientID] = actionArgs;
           if (!recipientID && input.detectID) {
             recipientID = input.detectID;
@@ -1644,6 +1701,14 @@ export class BriefcaseAPI {
         aliases: ["discard", "drop", "throw"],
         args: ["<item_id | index>*<num|'all'>"],
         async handler() {
+          if (self.extraConfig.readonly) {
+            return output.reply(
+              `👤 **${
+                userData.name || "Unregistered"
+              }** (${inventoryName})\n\n` +
+                `❌ You cannot do this action in a read-only inventory.`
+            );
+          }
           let [key, amount]: [string?, (string | number)?, ...a: any[]] = (
             actionArgs[0] ?? ""
           ).split("*");
@@ -1870,6 +1935,14 @@ export class BriefcaseAPI {
         aliases: ["-tr"],
         args: ["<uid|'any'>", "<your_item_id>*<num>", "<their_item_id>*<num>"],
         async handler() {
+          if (self.extraConfig.readonly) {
+            return output.reply(
+              `👤 **${
+                userData.name || "Unregistered"
+              }** (${inventoryName})\n\n` +
+                `❌ You cannot do this action in a read-only inventory.`
+            );
+          }
           if (actionArgs.length < 3) {
             return output.reply(
               [
@@ -2083,6 +2156,14 @@ export class BriefcaseAPI {
         aliases: ["-s"],
         args: ["<item_id>*<num|'all'>..."],
         async handler() {
+          if (self.extraConfig.readonly) {
+            return output.reply(
+              `👤 **${
+                userData.name || "Unregistered"
+              }** (${inventoryName})\n\n` +
+                `❌ You cannot do this action in a read-only inventory.`
+            );
+          }
           if (!actionArgs.length) {
             return output.reply(`❌ Specify an item to sell!`);
           }
@@ -2163,15 +2244,18 @@ export class BriefcaseAPI {
         },
       },
     ];
+    const readonlyAllowed = ["list", "all", "inspect", "top"];
     const home = new SpectralCMDHome(
       {
         isHypen: false,
         ...this.extraConfig,
       },
       [
-        ...defaultFeatures.filter(
-          (i) => !this.extraConfig.ignoreFeature.includes(i.key)
-        ),
+        ...defaultFeatures
+          .filter((i) => !this.extraConfig.ignoreFeature.includes(i.key))
+          .filter(
+            (i) => !this.extraConfig.readonly || readonlyAllowed.includes(i.key)
+          ),
         ...mappedExtra,
       ]
     );

@@ -300,7 +300,9 @@ const handlers: Record<string, CommandEntryFunc> = {
     const getLang = langParser.createGetLang(langs);
     const adminData = await money.getItem("wss:admin");
     const allData = await money.getAll();
-    const items: Record<string, any>[] = Array.from(adminData.requestItems);
+    const items: Record<string, any>[] = Array.from(
+      adminData.requestItems ?? []
+    );
     let result = "";
     const slicer = new Slicer(items.reverse(), 5);
     for (const itemReq of slicer.getPage(args[0])) {
