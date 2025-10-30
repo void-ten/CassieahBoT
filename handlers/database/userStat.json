@@ -3,7 +3,7 @@
     "money": 9980419,
     "exp": 0,
     "battlePoints": 510,
-    "lastModified": 1761817258906,
+    "lastModified": 1761817415520,
     "name": "Liane",
     "usernameHistory": [
       "Liane"
@@ -454,6 +454,19 @@
         "cannotToss": false
       },
       {
+        "name": "Gift Pack #4",
+        "icon": "🎁🐶",
+        "flavorText": "Either a new companion, a rare irrelevant item, or just some trash.",
+        "sellPrice": 100,
+        "type": "roulette_pack",
+        "treasureKey": "randomGroupedBiasFirst_generic_generic_petsI_petsII_petsIII",
+        "key": "pGiftPack",
+        "cannotSend": true,
+        "uuid": "1761817321361_10003238-b4c1-442c-ad55-2fec8f219429",
+        "index": 35,
+        "cannotToss": false
+      },
+      {
         "name": "HighRoll Pass",
         "key": "highRollPass",
         "flavorText": "A pass won by achieving a 7-win streak in slots. This pass allows you to place slot bets over 100000, unlocking bigger wins and higher stakes. Remember, with great risk comes great reward. Surprisingly easy to toss away like a normal item!",
@@ -502,7 +515,7 @@
         "type": "pet",
         "uuid": "1761816633134_bfbffe57-0471-4058-a066-6529c828d521",
         "submissionDate": 1761813048538,
-        "index": 34,
+        "index": 21,
         "cannotToss": false,
         "dislikes": [],
         "likes": [
@@ -525,7 +538,7 @@
         "prob": 0.3333333333333333,
         "isGift": true,
         "uuid": "1761735642133_fe822a8a-3df4-4a0f-b228-ebd23815c656",
-        "index": 21,
+        "index": 22,
         "cannotToss": false
       },
       {
@@ -549,7 +562,7 @@
         "prob": 0.045,
         "isGift": true,
         "uuid": "1761735796598_e483512d-945a-4c1a-9ace-d9c7adfb9ea0",
-        "index": 22,
+        "index": 23,
         "cannotToss": false
       },
       {
@@ -569,7 +582,7 @@
         ],
         "isGift": true,
         "uuid": "1761735764299_573048af-dd86-49d2-8257-20bd6584a5a1",
-        "index": 23,
+        "index": 24,
         "cannotToss": false
       },
       {
@@ -586,19 +599,6 @@
         "prob": 0.5,
         "isGift": true,
         "uuid": "1761735618277_3e1675e9-7134-49dd-b3ab-e8de1ed346ac",
-        "index": 24,
-        "cannotToss": false
-      },
-      {
-        "name": "Special Gift #5",
-        "icon": "🎁🎴",
-        "flavorText": "Either a rare important item, or maybe some trash.",
-        "sellPrice": 100,
-        "type": "roulette_pack",
-        "treasureKey": "randomGroupedBiasFirst_generic_unlucky",
-        "key": "nGiftPack",
-        "cannotSend": true,
-        "uuid": "1761734956453_fe8c7d56-e398-4b1c-a417-759ab392be0e",
         "index": 25,
         "cannotToss": false
       },
@@ -611,8 +611,21 @@
         "treasureKey": "randomGroupedBiasFirst_generic_unlucky",
         "key": "nGiftPack",
         "cannotSend": true,
-        "uuid": "1761735379602_b8419a38-efd6-4b33-aae3-30d3e372c340",
+        "uuid": "1761734956453_fe8c7d56-e398-4b1c-a417-759ab392be0e",
         "index": 26,
+        "cannotToss": false
+      },
+      {
+        "name": "Special Gift #5",
+        "icon": "🎁🎴",
+        "flavorText": "Either a rare important item, or maybe some trash.",
+        "sellPrice": 100,
+        "type": "roulette_pack",
+        "treasureKey": "randomGroupedBiasFirst_generic_unlucky",
+        "key": "nGiftPack",
+        "cannotSend": true,
+        "uuid": "1761735379602_b8419a38-efd6-4b33-aae3-30d3e372c340",
+        "index": 27,
         "cannotToss": false
       },
       {
@@ -635,7 +648,7 @@
         "prob": 1,
         "isGift": true,
         "uuid": "1761793158430_903e2b7c-0250-4d06-a5cb-d207affabe08",
-        "index": 27,
+        "index": 28,
         "cannotToss": false
       },
       {
@@ -657,7 +670,7 @@
         ],
         "isGift": true,
         "uuid": "1761735774585_eb4620eb-08aa-4641-ab00-9b82fb6055bc",
-        "index": 28,
+        "index": 29,
         "cannotToss": false
       },
       {
@@ -679,29 +692,6 @@
         ],
         "isGift": true,
         "uuid": "1761735781460_506a0337-66e6-4f73-9c74-3374bb9033f7",
-        "index": 29,
-        "cannotToss": false
-      },
-      {
-        "key": "gsTomato",
-        "name": "Tomato Seed",
-        "flavorText": "Juicy tomatoes for big profits.",
-        "icon": "🍅",
-        "type": "gardenSeed",
-        "sellPrice": 800,
-        "cropData": {
-          "baseValue": 27,
-          "growthTime": 3150000,
-          "harvests": 40,
-          "yields": 5
-        },
-        "group": [
-          "generic",
-          "gardenShop"
-        ],
-        "prob": 0.5,
-        "isGift": true,
-        "uuid": "1761735582577_b091f0c3-1a70-4453-b927-9bac5080aa66",
         "index": 30,
         "cannotToss": false
       },
@@ -724,8 +714,31 @@
         ],
         "prob": 0.5,
         "isGift": true,
-        "uuid": "1761735607297_faf81c48-7739-4184-b22c-d354bba9de0e",
+        "uuid": "1761735582577_b091f0c3-1a70-4453-b927-9bac5080aa66",
         "index": 31,
+        "cannotToss": false
+      },
+      {
+        "key": "gsTomato",
+        "name": "Tomato Seed",
+        "flavorText": "Juicy tomatoes for big profits.",
+        "icon": "🍅",
+        "type": "gardenSeed",
+        "sellPrice": 800,
+        "cropData": {
+          "baseValue": 27,
+          "growthTime": 3150000,
+          "harvests": 40,
+          "yields": 5
+        },
+        "group": [
+          "generic",
+          "gardenShop"
+        ],
+        "prob": 0.5,
+        "isGift": true,
+        "uuid": "1761735607297_faf81c48-7739-4184-b22c-d354bba9de0e",
+        "index": 32,
         "cannotToss": false
       },
       {
@@ -748,7 +761,7 @@
         "prob": 0.3333333333333333,
         "isGift": true,
         "uuid": "1761735812779_3117738b-f9b0-4267-93e4-cc6df8363fa8",
-        "index": 32,
+        "index": 33,
         "cannotToss": false
       },
       {
@@ -765,7 +778,7 @@
         "prob": 0.3333333333333333,
         "isGift": true,
         "uuid": "1761735650958_36030320-0f87-4918-bbbf-ba5355af6fb7",
-        "index": 33,
+        "index": 34,
         "cannotToss": false
       }
     ],
@@ -1489,7 +1502,7 @@
       "emptyIcon": "⬜"
     },
     "tilesStamp": 1761726532744,
-    "lastGiftClaim": 1761796461476,
+    "lastGiftClaim": 1761817321361,
     "petsData": [
       {
         "name": "Kong",
@@ -1547,7 +1560,7 @@
         ],
         "uuid": "1761817236755_0179c9ba-7ed5-4d55-a70a-bfab386b44b5",
         "submissionDate": 1761817236755,
-        "index": 1,
+        "index": 0,
         "cannotToss": false,
         "dislikes": [
           "web:bmVha3l1dGk"
@@ -1564,7 +1577,29 @@
         "type": "potion",
         "uuid": "1761817226953_203fcfe2-2956-4031-8d80-aea8f581eafc",
         "submissionDate": 1761817226953,
-        "index": 0,
+        "index": 1,
+        "cannotToss": true,
+        "approved": true,
+        "authorID": "web:bmVha3l1dGk",
+        "dislikes": [],
+        "likes": [
+          "web:bmVha3l1dGk"
+        ]
+      },
+      {
+        "name": "Foamblade",
+        "icon": "🧽",
+        "key": "foamBlade",
+        "sellPrice": 1000000,
+        "shopPrice": 10000000,
+        "flavorText": "A soft but decently sharp sword for your pet.",
+        "type": "weapon",
+        "atk": 15,
+        "def": 1,
+        "magic": 0,
+        "uuid": "1761817374932_50e580ad-8fc0-4cab-b8ed-28b9436092e0",
+        "submissionDate": 1761817374932,
+        "index": 2,
         "cannotToss": true,
         "approved": true,
         "authorID": "web:bmVha3l1dGk"
