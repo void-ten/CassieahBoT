@@ -60,7 +60,24 @@ export async function entry({
   try {
     const canv = new CanvCass(720, 720);
 
-    const pfp = await loadImage("")
+    const pfp = await loadImage(url);
+
+    await canv.drawImage(pfp, canv.left, canv.top, {
+      width: canv.width,
+      height: canv.height,
+    });
+
+    canv.drawText(quoteText, {
+      align: "center",
+      vAlign: "top",
+      baseline: "middle",
+      fontType: "cbold",
+      size: 50,
+      fill: "rgba(255, 255, 255, 0.97)",
+      x: canv.centerX,
+      y: canv.bottom - 60,
+      breakMaxWidth: canv.width - 60 * 2,
+    });
 
     await output.reply({
       body: `📝 Quote from ***${info?.name ?? userName}***:`,
