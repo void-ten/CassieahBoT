@@ -672,7 +672,7 @@ export class CanvCass implements CanvCass.Rect {
     ctx.save();
 
     const lineHeight = size + (yMargin ?? 0);
-    const direction = breakTo === "top" ? -1 : 1;
+    const direction = breakTo === "top" ? 0 : 1;
 
     ctx.font = font;
     ctx.textAlign = align;
@@ -694,16 +694,6 @@ export class CanvCass implements CanvCass.Rect {
       ty -= lineHeight * (lines.length - 1);
     }
 
-    switch (vAlign) {
-      case "top":
-        break;
-      case "middle":
-        ty -= (lineHeight * (lines.length - 1)) / 2;
-        break;
-      case "bottom":
-        ty -= lineHeight * (lines.length - 1);
-        break;
-    }
     for (const line of lines) {
       if (stroke) {
         ctx.strokeStyle = stroke;
